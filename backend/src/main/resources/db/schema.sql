@@ -1,0 +1,148 @@
+CREATE TABLE IF NOT EXISTS roles (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL UNIQUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_roles (
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    CONSTRAINT fk_user_roles_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_roles_role FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS news (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    slug VARCHAR(220) NOT NULL UNIQUE,
+    summary VARCHAR(500) NOT NULL,
+    content TEXT NOT NULL,
+    featured_image VARCHAR(500),
+    category VARCHAR(100),
+    is_published BOOLEAN NOT NULL DEFAULT FALSE,
+    published_at TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS events (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    slug VARCHAR(220) NOT NULL UNIQUE,
+    summary VARCHAR(500) NOT NULL,
+    description TEXT NOT NULL,
+    featured_image VARCHAR(500),
+    category VARCHAR(100),
+    event_date DATE NOT NULL,
+    start_time TIME,
+    end_time TIME,
+    location VARCHAR(200),
+    is_published BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS gallery_images (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(180) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS faq (
+    id BIGSERIAL PRIMARY KEY,
+    question VARCHAR(300) NOT NULL,
+    answer TEXT NOT NULL,
+    category VARCHAR(100),
+    sort_order INTEGER NOT NULL DEFAULT 0,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS teachers (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(160) NOT NULL,
+    role VARCHAR(120) NOT NULL,
+    bio TEXT NOT NULL,
+    photo_url VARCHAR(500),
+    email VARCHAR(160),
+    phone VARCHAR(60),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admissions (
+    id BIGSERIAL PRIMARY KEY,
+    student_first_name VARCHAR(120) NOT NULL,
+    student_last_name VARCHAR(120) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    grade_applying_for VARCHAR(80) NOT NULL,
+    parent_full_name VARCHAR(160) NOT NULL,
+    parent_phone VARCHAR(60) NOT NULL,
+    parent_email VARCHAR(160) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    previous_school VARCHAR(180),
+    notes TEXT,
+    submitted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(160) NOT NULL,
+    phone VARCHAR(60) NOT NULL,
+    email VARCHAR(160) NOT NULL,
+    subject VARCHAR(180) NOT NULL,
+    message TEXT NOT NULL,
+    submitted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS homepage_sections (
+    id BIGSERIAL PRIMARY KEY,
+    section_key VARCHAR(120) NOT NULL UNIQUE,
+    title_uz VARCHAR(200) NOT NULL,
+    title_en VARCHAR(200) NOT NULL,
+    title_ru VARCHAR(200) NOT NULL,
+    content_uz TEXT NOT NULL,
+    content_en TEXT NOT NULL,
+    content_ru TEXT NOT NULL,
+    image_url VARCHAR(500),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS settings (
+    id BIGSERIAL PRIMARY KEY,
+    setting_key VARCHAR(150) NOT NULL UNIQUE,
+    setting_value TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_news_published ON news (is_published, published_at DESC);
+CREATE INDEX IF NOT EXISTS idx_events_date ON events (is_published, event_date ASC);
+CREATE INDEX IF NOT EXISTS idx_gallery_category ON gallery_images (category);
+CREATE INDEX IF NOT EXISTS idx_faq_category ON faq (category);
+CREATE INDEX IF NOT EXISTS idx_admissions_submitted ON admissions (submitted_at DESC);
+CREATE INDEX IF NOT EXISTS idx_contact_submitted ON contact_messages (submitted_at DESC);

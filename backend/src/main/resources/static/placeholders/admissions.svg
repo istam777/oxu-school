@@ -1,0 +1,15 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" rx="36" fill="#0D1B6F"/>
+  <path d="M0 520C179 450 301 442 420 470C588 510 662 626 870 604C1014 589 1113 529 1200 470V700H0V520Z" fill="#17339B"/>
+  <rect x="112" y="120" width="320" height="430" rx="28" fill="#FFFFFF" fill-opacity="0.94"/>
+  <circle cx="272" cy="230" r="66" fill="#D8B56A" fill-opacity="0.24"/>
+  <rect x="178" y="340" width="188" height="16" rx="8" fill="#C6D0F7"/>
+  <rect x="178" y="376" width="150" height="16" rx="8" fill="#C6D0F7"/>
+  <path d="M650 188H980" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round"/>
+  <path d="M650 258H930" stroke="#C5D1FF" stroke-width="16" stroke-linecap="round"/>
+  <path d="M650 302H948" stroke="#C5D1FF" stroke-width="16" stroke-linecap="round"/>
+  <path d="M650 346H900" stroke="#C5D1FF" stroke-width="16" stroke-linecap="round"/>
+  <rect x="650" y="428" width="210" height="54" rx="27" fill="#D8B56A"/>
+  <text x="650" y="556" fill="#FFFFFF" font-size="52" font-family="Georgia, serif" font-weight="700">Admissions Open</text>
+  <text x="650" y="606" fill="#DDE5FF" font-size="26" font-family="Arial, sans-serif">Application banner placeholder</text>
+</svg>

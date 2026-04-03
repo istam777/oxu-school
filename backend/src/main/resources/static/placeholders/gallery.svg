@@ -1,0 +1,13 @@
+<svg width="1000" height="760" viewBox="0 0 1000 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1000" height="760" rx="32" fill="#F8FAFD"/>
+  <rect x="42" y="42" width="916" height="676" rx="28" fill="url(#gallery)"/>
+  <circle cx="280" cy="280" r="90" fill="#FFFFFF" fill-opacity="0.22"/>
+  <path d="M130 580L330 380L470 500L620 330L860 580H130Z" fill="#FFFFFF" fill-opacity="0.28"/>
+  <text x="122" y="644" fill="#FFFFFF" font-size="42" font-family="Georgia, serif" font-weight="700">Gallery Placeholder</text>
+  <defs>
+    <linearGradient id="gallery" x1="42" y1="42" x2="958" y2="718" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17339B"/>
+      <stop offset="1" stop-color="#0D1B6F"/>
+    </linearGradient>
+  </defs>
+</svg>
