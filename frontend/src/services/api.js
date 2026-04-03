@@ -12,4 +12,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => {
+    const contentType = response.headers?.["content-type"] || "";
+    const isHtmlString =
+      typeof response.data === "string" && /<!doctype html|<html/i.test(response.data);
+
+    if (isHtmlString || contentType.includes("text/html")) {
+      return Promise.reject(new Error("Invalid API response: HTML received instead of JSON"));
+    }
+
+    return response;
+  },
+  (error) => Promise.reject(error)
+);
+
 export default api;
