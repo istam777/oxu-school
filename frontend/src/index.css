@@ -142,8 +142,16 @@ html.theme-dark .site-background {
   min-width: 0;
 }
 
+.brand-logo-inline-wordmark {
+  white-space: nowrap;
+}
+
 .brand-logo-title,
 .brand-logo-subtitle {
+  display: block;
+}
+
+.brand-logo-inline-text {
   display: block;
 }
 
@@ -164,6 +172,21 @@ html.theme-dark .site-background {
 
 .brand-logo.is-animated .brand-logo-subtitle {
   animation: logoWordReveal 0.46s ease-out 1.3s forwards;
+}
+
+.brand-logo.is-animated-inline {
+  gap: 0.7rem;
+}
+
+.brand-logo.is-animated-inline .brand-logo-mark {
+  animation: logoRollIn 2s cubic-bezier(0.2, 0.95, 0.24, 1) both;
+}
+
+.brand-logo.is-animated-inline .brand-logo-inline-text {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, opacity, transform;
+  animation: logoWordReveal 0.52s ease-out 1.08s forwards;
 }
 
 img,

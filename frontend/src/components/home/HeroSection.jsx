@@ -31,9 +31,8 @@ export default function HeroSection({ eyebrow, title, subtitle, stats, buttons }
       <div className="container-shell relative">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div className="max-w-4xl">
-            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs backdrop-blur sm:mb-8 sm:text-sm">
-              <SchoolLogo compact light size="xs" />
-              <span>{eyebrow}</span>
+            <div className="mb-6 inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs backdrop-blur sm:mb-8 sm:text-sm">
+              <SchoolLogo compact light size="xs" animated trailingText={eyebrow} />
             </div>
 
             <h1 className="font-display text-[2.7rem] font-semibold leading-[1.04] sm:text-6xl lg:max-w-5xl lg:text-7xl">

@@ -8,11 +8,18 @@ const sizeMap = {
   lg: "h-24 w-24 sm:h-28 sm:w-28",
 };
 
-export default function SchoolLogo({ compact = false, light = false, size = "md", animated = false }) {
+export default function SchoolLogo({
+  compact = false,
+  light = false,
+  size = "md",
+  animated = false,
+  trailingText = null,
+}) {
   const { pick, language } = useLanguage();
   const logoSize = sizeMap[size] || sizeMap.md;
   const wordmarkRef = useRef(null);
   const [rollDistance, setRollDistance] = useState(null);
+  const isInlineAnimated = Boolean(animated && trailingText);
 
   const subtitle = pick({
     uz: "Xalqaro maktabi",
@@ -21,7 +28,7 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
   });
 
   useLayoutEffect(() => {
-    if (!animated || compact || !wordmarkRef.current) return undefined;
+    if ((!animated && !isInlineAnimated) || compact || !wordmarkRef.current) return undefined;
 
     const updateDistance = () => {
       const gap = window.innerWidth >= 640 ? 16 : 12;
@@ -34,11 +41,13 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
     return () => {
       window.removeEventListener("resize", updateDistance);
     };
-  }, [animated, compact, language, size, subtitle]);
+  }, [animated, compact, isInlineAnimated, language, size, subtitle, trailingText]);
 
   return (
     <div
-      className={`brand-logo flex items-center gap-3 sm:gap-4 ${light ? "is-light" : ""} ${animated ? "is-animated" : ""}`}
+      className={`brand-logo flex items-center gap-3 sm:gap-4 ${light ? "is-light" : ""} ${animated ? "is-animated" : ""} ${
+        isInlineAnimated ? "is-animated-inline" : ""
+      }`}
       style={rollDistance ? { "--logo-roll-distance": `${rollDistance}px` } : undefined}
     >
       <div className={`brand-logo-mark relative ${logoSize} shrink-0`}>
@@ -53,19 +62,27 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
         />
       </div>
 
-      {!compact && (
-        <div ref={wordmarkRef} className="brand-logo-wordmark overflow-hidden">
-          <p className={`brand-logo-title font-display text-xl font-semibold tracking-wide sm:text-2xl ${light ? "text-white" : "text-brand-primary"}`}>
-            OSIYO
-          </p>
-          <p
-            className={`brand-logo-subtitle -mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.22em] ${
-              light ? "text-white/60" : "text-brand-secondary/70"
-            }`}
-          >
-            {subtitle}
+      {trailingText ? (
+        <div ref={wordmarkRef} className="brand-logo-wordmark brand-logo-inline-wordmark overflow-hidden">
+          <p className={`brand-logo-inline-text text-sm font-medium leading-6 sm:text-base ${light ? "text-white" : "text-brand-primary"}`}>
+            {trailingText}
           </p>
         </div>
+      ) : (
+        !compact && (
+          <div ref={wordmarkRef} className="brand-logo-wordmark overflow-hidden">
+            <p className={`brand-logo-title font-display text-xl font-semibold tracking-wide sm:text-2xl ${light ? "text-white" : "text-brand-primary"}`}>
+              OSIYO
+            </p>
+            <p
+              className={`brand-logo-subtitle -mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.22em] ${
+                light ? "text-white/60" : "text-brand-secondary/70"
+              }`}
+            >
+              {subtitle}
+            </p>
+          </div>
+        )
       )}
     </div>
   );
