@@ -83,7 +83,7 @@ export default function Header({ settings }) {
       <header className="site-header sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
         <div className="container-shell flex items-center justify-between gap-3 py-3 sm:gap-4 sm:py-4">
           <Link to="/" className="shrink-0">
-            <SchoolLogo size="sm" />
+            <SchoolLogo size="sm" animated />
           </Link>
 
           <nav className="hidden items-center gap-2 xl:flex">

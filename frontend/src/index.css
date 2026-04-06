@@ -85,162 +85,78 @@ html.theme-dark .site-background {
     url("/site-background.jpg");
 }
 
-@keyframes logoEntrance {
+@keyframes logoRollIn {
+  0% {
+    transform: translate3d(var(--logo-roll-distance, 6rem), 0, 0) rotate(0deg);
+  }
+
+  72% {
+    transform: translate3d(-0.25rem, 0, 0) rotate(-540deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-520deg);
+  }
+}
+
+@keyframes logoWordReveal {
   0% {
     opacity: 0;
-    transform: translate3d(0, 14px, 0) scale(0.9);
+    clip-path: inset(0 100% 0 0);
+    transform: translate3d(-1rem, 0, 0);
   }
 
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes logoFloat {
-  0%,
-  100% {
+    clip-path: inset(0 0 0 0);
     transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: translate3d(0, -5px, 0);
-  }
-}
-
-@keyframes logoAuraPulse {
-  0%,
-  100% {
-    opacity: 0.34;
-    transform: scale(0.94);
-  }
-
-  50% {
-    opacity: 0.56;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes logoRingSweep {
-  0% {
-    transform: rotate(0deg) scale(0.98);
-  }
-
-  100% {
-    transform: rotate(360deg) scale(1.02);
   }
 }
 
 .brand-logo {
   position: relative;
-  transition: transform 0.38s cubic-bezier(0.18, 0.89, 0.32, 1.08);
-  will-change: transform;
+  width: fit-content;
 }
 
 .brand-logo-mark {
   position: relative;
+  z-index: 2;
   display: grid;
   place-items: center;
-  isolation: isolate;
-  animation: logoEntrance 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.08) both;
-}
-
-.brand-logo-aura,
-.brand-logo-ring {
-  position: absolute;
-  inset: -8%;
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-.brand-logo-aura {
-  z-index: 0;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.28), transparent 42%),
-    radial-gradient(circle at 74% 78%, rgba(216, 181, 106, 0.2), transparent 44%),
-    radial-gradient(circle, rgba(23, 51, 155, 0.16), transparent 70%);
-  filter: blur(14px);
-  opacity: 0.38;
-  animation: logoAuraPulse 5.8s ease-in-out infinite;
-}
-
-.brand-logo-ring {
-  z-index: 1;
-  background: conic-gradient(
-    from 40deg,
-    rgba(216, 181, 106, 0.12),
-    rgba(255, 255, 255, 0.42),
-    rgba(23, 51, 155, 0.2),
-    rgba(216, 181, 106, 0.12)
-  );
-  mask:
-    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)),
-    linear-gradient(#000, #000);
-  -webkit-mask:
-    radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)),
-    linear-gradient(#000, #000);
-  opacity: 0.58;
-  animation: logoRingSweep 8.5s linear infinite;
+  transform-origin: center center;
 }
 
 .brand-logo-image {
-  position: relative;
-  z-index: 2;
-  filter: drop-shadow(0 12px 22px rgba(13, 27, 111, 0.16));
-  animation:
-    logoEntrance 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.08) both,
-    logoFloat 6.4s ease-in-out 0.8s infinite;
-  transition:
-    transform 0.42s cubic-bezier(0.18, 0.89, 0.32, 1.08),
-    filter 0.38s ease;
-  will-change: transform, filter;
+  filter: drop-shadow(0 10px 18px rgba(13, 27, 111, 0.14));
 }
 
 .brand-logo-wordmark {
-  animation: logoEntrance 0.68s cubic-bezier(0.18, 0.89, 0.32, 1.08) 0.08s both;
-  transition: transform 0.38s cubic-bezier(0.18, 0.89, 0.32, 1.08);
-  will-change: transform;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
 }
 
-.brand-logo:hover {
-  transform: translate3d(0, -2px, 0);
+.brand-logo-title,
+.brand-logo-subtitle {
+  display: block;
 }
 
-.brand-logo:hover .brand-logo-image {
-  transform: scale(1.16) rotate(1deg);
-  filter:
-    drop-shadow(0 18px 28px rgba(13, 27, 111, 0.2))
-    drop-shadow(0 0 22px rgba(216, 181, 106, 0.14));
+.brand-logo.is-animated .brand-logo-mark {
+  animation: logoRollIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.brand-logo:hover .brand-logo-aura {
-  opacity: 0.66;
-  transform: scale(1.06);
+.brand-logo.is-animated .brand-logo-title,
+.brand-logo.is-animated .brand-logo-subtitle {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
 }
 
-.brand-logo:hover .brand-logo-ring {
-  opacity: 0.82;
+.brand-logo.is-animated .brand-logo-title {
+  animation: logoWordReveal 0.46s ease-out 0.36s forwards;
 }
 
-.brand-logo:hover .brand-logo-wordmark {
-  transform: translate3d(0, -1px, 0);
-}
-
-.brand-logo.is-light .brand-logo-aura {
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.32), transparent 42%),
-    radial-gradient(circle at 74% 78%, rgba(216, 181, 106, 0.28), transparent 44%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
-}
-
-.brand-logo.is-light .brand-logo-ring {
-  background: conic-gradient(
-    from 40deg,
-    rgba(216, 181, 106, 0.18),
-    rgba(255, 255, 255, 0.48),
-    rgba(147, 178, 255, 0.24),
-    rgba(216, 181, 106, 0.18)
-  );
+.brand-logo.is-animated .brand-logo-subtitle {
+  animation: logoWordReveal 0.42s ease-out 0.62s forwards;
 }
 
 img,
@@ -1014,8 +930,6 @@ html.theme-dark .shadow-soft {
   }
 
   .brand-logo:hover .brand-logo-image,
-  .brand-logo:hover .brand-logo-aura,
-  .brand-logo:hover .brand-logo-ring,
   .brand-logo:hover .brand-logo-wordmark {
     transform: none;
     opacity: inherit;
@@ -1053,17 +967,17 @@ html.theme-dark .shadow-soft {
   .brand-logo,
   .brand-logo-mark,
   .brand-logo-image,
-  .brand-logo-aura,
-  .brand-logo-ring,
-  .brand-logo-wordmark {
+  .brand-logo-wordmark,
+  .brand-logo-title,
+  .brand-logo-subtitle {
     transition-duration: 0.22s;
   }
 
   .brand-logo-mark,
   .brand-logo-image,
-  .brand-logo-aura,
-  .brand-logo-ring,
-  .brand-logo-wordmark {
+  .brand-logo-wordmark,
+  .brand-logo-title,
+  .brand-logo-subtitle {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
