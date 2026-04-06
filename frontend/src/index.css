@@ -87,15 +87,15 @@ html.theme-dark .site-background {
 
 @keyframes logoRollIn {
   0% {
-    transform: translate3d(var(--logo-roll-distance, 6rem), 0, 0) rotate(0deg);
+    transform: translate3d(var(--logo-roll-distance, 12rem), 0, 0) rotate(720deg);
   }
 
-  72% {
-    transform: translate3d(-0.25rem, 0, 0) rotate(-540deg);
+  82% {
+    transform: translate3d(0.3rem, 0, 0) rotate(14deg);
   }
 
   100% {
-    transform: translate3d(0, 0, 0) rotate(-520deg);
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }
 
@@ -103,7 +103,7 @@ html.theme-dark .site-background {
   0% {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
-    transform: translate3d(-1rem, 0, 0);
+    transform: translate3d(-0.9rem, 0, 0);
   }
 
   100% {
@@ -124,6 +124,7 @@ html.theme-dark .site-background {
   display: grid;
   place-items: center;
   transform-origin: center center;
+  will-change: transform;
 }
 
 .brand-logo-image {
@@ -142,21 +143,22 @@ html.theme-dark .site-background {
 }
 
 .brand-logo.is-animated .brand-logo-mark {
-  animation: logoRollIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: logoRollIn 2s cubic-bezier(0.2, 0.95, 0.24, 1) both;
 }
 
 .brand-logo.is-animated .brand-logo-title,
 .brand-logo.is-animated .brand-logo-subtitle {
   opacity: 0;
   clip-path: inset(0 100% 0 0);
+  will-change: clip-path, opacity, transform;
 }
 
 .brand-logo.is-animated .brand-logo-title {
-  animation: logoWordReveal 0.46s ease-out 0.36s forwards;
+  animation: logoWordReveal 0.5s ease-out 0.72s forwards;
 }
 
 .brand-logo.is-animated .brand-logo-subtitle {
-  animation: logoWordReveal 0.42s ease-out 0.62s forwards;
+  animation: logoWordReveal 0.46s ease-out 1.12s forwards;
 }
 
 img,

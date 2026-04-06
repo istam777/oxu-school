@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 
 const sizeMap = {
@@ -8,11 +9,38 @@ const sizeMap = {
 };
 
 export default function SchoolLogo({ compact = false, light = false, size = "md", animated = false }) {
-  const { pick } = useLanguage();
+  const { pick, language } = useLanguage();
   const logoSize = sizeMap[size] || sizeMap.md;
+  const wordmarkRef = useRef(null);
+  const [rollDistance, setRollDistance] = useState(null);
+
+  const subtitle = pick({
+    uz: "Xalqaro maktabi",
+    en: "International School",
+    ru: "Международная школа",
+  });
+
+  useLayoutEffect(() => {
+    if (!animated || compact || !wordmarkRef.current) return undefined;
+
+    const updateDistance = () => {
+      const gap = window.innerWidth >= 640 ? 16 : 12;
+      setRollDistance(wordmarkRef.current.offsetWidth + gap);
+    };
+
+    updateDistance();
+    window.addEventListener("resize", updateDistance);
+
+    return () => {
+      window.removeEventListener("resize", updateDistance);
+    };
+  }, [animated, compact, language, size, subtitle]);
 
   return (
-    <div className={`brand-logo flex items-center gap-3 sm:gap-4 ${light ? "is-light" : ""} ${animated ? "is-animated" : ""}`}>
+    <div
+      className={`brand-logo flex items-center gap-3 sm:gap-4 ${light ? "is-light" : ""} ${animated ? "is-animated" : ""}`}
+      style={rollDistance ? { "--logo-roll-distance": `${rollDistance}px` } : undefined}
+    >
       <div className={`brand-logo-mark relative ${logoSize} shrink-0`}>
         <img
           src="/logo_circle_centered_v4.png"
@@ -26,7 +54,7 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
       </div>
 
       {!compact && (
-        <div className="brand-logo-wordmark overflow-hidden">
+        <div ref={wordmarkRef} className="brand-logo-wordmark overflow-hidden">
           <p className={`brand-logo-title font-display text-xl font-semibold tracking-wide sm:text-2xl ${light ? "text-white" : "text-brand-primary"}`}>
             OSIYO
           </p>
@@ -35,11 +63,7 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
               light ? "text-white/60" : "text-brand-secondary/70"
             }`}
           >
-            {pick({
-              uz: "Xalqaro maktabi",
-              en: "International School",
-              ru: "Международная школа",
-            })}
+            {subtitle}
           </p>
         </div>
       )}
