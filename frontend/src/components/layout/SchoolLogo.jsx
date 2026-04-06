@@ -25,7 +25,7 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
 
     const updateDistance = () => {
       const gap = window.innerWidth >= 640 ? 16 : 12;
-      setRollDistance(wordmarkRef.current.offsetWidth + gap);
+      setRollDistance(wordmarkRef.current.offsetWidth + gap + 10);
     };
 
     updateDistance();
