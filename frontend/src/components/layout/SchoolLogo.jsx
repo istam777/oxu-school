@@ -12,8 +12,10 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
   const logoSize = sizeMap[size] || sizeMap.md;
 
   return (
-    <div className="flex items-center gap-3 sm:gap-4">
-      <div className={`relative ${logoSize} shrink-0`}>
+    <div className={`brand-logo flex items-center gap-3 sm:gap-4 ${light ? "is-light" : ""}`}>
+      <div className={`brand-logo-mark relative ${logoSize} shrink-0`}>
+        <span className="brand-logo-aura" aria-hidden="true" />
+        <span className="brand-logo-ring" aria-hidden="true" />
         <img
           src="/logo_circle_centered_v4.png"
           alt={pick({
@@ -21,12 +23,12 @@ export default function SchoolLogo({ compact = false, light = false, size = "md"
             en: "OSIYO INTERNATIONAL SCHOOL logo",
             ru: "Логотип школы OSIYO",
           })}
-          className="h-full w-full scale-[1.12] object-contain object-center"
+          className="brand-logo-image h-full w-full scale-[1.12] object-contain object-center"
         />
       </div>
 
       {!compact && (
-        <div>
+        <div className="brand-logo-wordmark">
           <p className={`font-display text-xl font-semibold tracking-wide sm:text-2xl ${light ? "text-white" : "text-brand-primary"}`}>
             OSIYO
           </p>
